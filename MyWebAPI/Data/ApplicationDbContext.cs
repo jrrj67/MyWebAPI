@@ -15,7 +15,6 @@ namespace MyWebAPI.Data
 
         public DbSet<Anime> Animes { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             Anime.OnModelCreating(modelBuilder);

@@ -1,3 +1,6 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +12,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MyWebAPI.Data;
+using MyWebAPI.Data.Models;
+using MyWebAPI.Data.Repositories;
+using MyWebAPI.Data.Validators;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,12 +38,20 @@ namespace MyWebAPI
 
             services.AddControllers();
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddFluentValidation();
+
+            services.AddTransient<IValidator<AnimeDTO>, AnimeValidator>();
             
+            services.AddTransient<IBaseRepository<Anime>, BaseRepository<Anime>>();
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyWebAPI", Version = "v1" });
             });
+
+            services.AddFluentValidationRulesToSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
