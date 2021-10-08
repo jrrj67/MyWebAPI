@@ -1,12 +1,13 @@
-﻿using FluentValidation;
+﻿using System;
+using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MyWebAPI.Data;
 using MyWebAPI.Data.Models;
 using MyWebAPI.Data.Repositories;
-using System;
+using MyWebAPI.Data.Requests;
+using MyWebAPI.Data.Responses;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyWebAPI.Controllers
@@ -17,17 +18,28 @@ namespace MyWebAPI.Controllers
     {
         private readonly ILogger<AnimeController> _logger;
         private readonly IBaseRepository<Anime> _repository;
+        private readonly IMapper _mapper;
 
-        public AnimeController(ILogger<AnimeController> logger, IBaseRepository<Anime> repository)
+        public AnimeController(ILogger<AnimeController> logger, IBaseRepository<Anime> repository, IMapper mapper)
         {
             _logger = logger;
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet]   
         public IActionResult GetAll()
         {
-            return Ok(_repository.GetAll());
+            try
+            {
+                var animes = _repository.GetAll();
+                var animesResponse = _mapper.Map<List<AnimeResponse>>(animes);
+                return Ok(animesResponse);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         } 
         
         [HttpGet("{id}")]   
@@ -35,43 +47,63 @@ namespace MyWebAPI.Controllers
         {
             try
             {
-                return Ok(_repository.GetById(id));
+                var anime = _repository.GetById(id);
+                var animeResponse = _mapper.Map<AnimeResponse>(anime);
+                return Ok(animeResponse);
             }
             catch (ArgumentException ex)
             {
                 return NotFound(ex.Message);
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         
         [HttpPost]   
-        public async Task<IActionResult> SaveAsync(AnimeDTO anime)
+        public async Task<IActionResult> SaveAsync(AnimeRequest anime)
         {
             try
             {
-                await _repository.SaveAsync(anime);
-                return Created("", anime);
+                anime.Validate();
+                var animeModel = _mapper.Map<Anime>(anime);
+                await _repository.SaveAsync(animeModel);
+                var animeResponse = _mapper.Map<AnimeResponse>(animeModel);
+                return Ok(animeResponse);
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Errors);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         } 
         
         [HttpPut("{id}")]   
-        public async Task<IActionResult> UpdateAsync(int id, AnimeDTO anime)
+        public async Task<IActionResult> UpdateAsync(int id, AnimeRequest anime)
         {
             try
             {
-                await _repository.UpdateAsync(id, anime);
-                return Ok(anime);
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
+                anime.Validate();
+                var animeModel = _mapper.Map<Anime>(anime);
+                await _repository.UpdateAsync(id, animeModel);
+                var animeResponse = _mapper.Map<AnimeResponse>(animeModel);
+                return Ok(animeResponse);
             }
             catch (ValidationException ex)
             {
                 return BadRequest(ex.Errors);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
         
@@ -84,6 +116,10 @@ namespace MyWebAPI.Controllers
                 return Ok();
             }
             catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }

@@ -3,23 +3,16 @@ using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using MyWebAPI.Data;
+using MyWebAPI.Data.Config;
 using MyWebAPI.Data.Models;
 using MyWebAPI.Data.Repositories;
+using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Validators;
-using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyWebAPI
 {
@@ -35,16 +28,13 @@ namespace MyWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
 
-            services.AddFluentValidation();
-
-            services.AddTransient<IValidator<AnimeDTO>, AnimeValidator>();
-            
-            services.AddTransient<IBaseRepository<Anime>, BaseRepository<Anime>>();
-
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+            services.AddAutoMapper(typeof(AutoMapperConfig));
+
+            services.AddFluentValidation();
 
             services.AddSwaggerGen(c =>
             {
@@ -52,6 +42,10 @@ namespace MyWebAPI
             });
 
             services.AddFluentValidationRulesToSwagger();
+
+            services.AddTransient<IValidator<AnimeRequest>, AnimeRequestValidator>();
+
+            services.AddTransient<IBaseRepository<Anime>, BaseRepository<Anime>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

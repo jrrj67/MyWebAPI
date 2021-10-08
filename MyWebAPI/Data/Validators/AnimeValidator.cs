@@ -1,12 +1,13 @@
 ﻿using System;
 using FluentValidation;
 using MyWebAPI.Data.Models;
+using MyWebAPI.Data.Requests;
 
 namespace MyWebAPI.Data.Validators
 {
-    public class AnimeValidator : AbstractValidator<Anime>
+    public class AnimeRequestValidator : AbstractValidator<AnimeRequest>
     {
-        public AnimeValidator()
+        public AnimeRequestValidator()
         {
             RuleFor(anime => anime.Name)
                 .NotNull()
@@ -14,7 +15,7 @@ namespace MyWebAPI.Data.Validators
 
             RuleFor(anime => anime.Description)
                 .NotNull()
-                .MaximumLength(100);
+                .MaximumLength(500);
             
             RuleFor(anime => anime.LaunchDate)
                 .NotNull()

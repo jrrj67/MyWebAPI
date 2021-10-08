@@ -8,7 +8,6 @@ namespace MyWebAPI.Data.Models
 {
     public class Anime : BaseModel
     {
-        private readonly AnimeValidator _validator = new AnimeValidator();
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime LaunchDate { get; set; }
@@ -18,11 +17,6 @@ namespace MyWebAPI.Data.Models
             Name = name;
             Description = description;
             LaunchDate = launchDate;
-        }
-
-        public override ValidationResult Validate()
-        {
-            return _validator.Validate(this);
         }
 
         public static void OnModelCreating(ModelBuilder modelBuilder)

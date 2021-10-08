@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MyWebAPI.Data
+namespace MyWebAPI.Data.Config
 {
     public class ApplicationDbContext : DbContext
     {
@@ -47,6 +47,7 @@ namespace MyWebAPI.Data
                 {
                     ((BaseModel)entity.Entity).CreatedAt = now;
                 }
+
                 ((BaseModel)entity.Entity).UpdatedAt = now;
             }
         }

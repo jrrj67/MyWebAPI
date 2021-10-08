@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Microsoft.EntityFrameworkCore;
+using MyWebAPI.Data.Config;
 using MyWebAPI.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -9,77 +10,65 @@ namespace MyWebAPI.Data.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
     {
-        private readonly ApplicationDbContext context;
+        private readonly ApplicationDbContext _context;
 
         public BaseRepository(ApplicationDbContext context)
         {
-            this.context = context;
+            _context = context;
         }
+
         public List<T> GetAll()
         {
-            return context.Set<T>().ToList();
+            return _context.Set<T>().ToList();
         }
 
         public T GetById(int id)
         {
-            var item = context.Set<T>().FirstOrDefault(t => t.Id == id);
+            var item = _context.Set<T>().FirstOrDefault(t => t.Id == id);
 
             if (item == null)
             {
                 throw new ArgumentException("Not found.");
             }
 
-            return context.Set<T>().FirstOrDefault(t => t.Id == id);
+            return item;
         }
 
         public async Task SaveAsync(T item)
         {
-            item.ResetHiddenFields();
-
-            var validator = item.Validate();
-
-            if (!validator.IsValid)
-            {
-                throw new ValidationException(validator.ToString(), validator.Errors);
-            }
-
-            await context.Set<T>().AddAsync(item);
-            await context.SaveChangesAsync();
+            await _context.Set<T>().AddAsync(item);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(int id, T item)
         {
-            item.ResetHiddenFields();
+            _context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
 
-            var exists = context.Set<T>().Any(t => t.Id == id);
+            var itemModel = _context.Set<T>().FirstOrDefault(i => i.Id == id);
 
-            if (!exists)
+            if (itemModel == null)
             {
                 throw new ArgumentException("Not found.");
             }
-
-            var validator = item.Validate();
-
-            if (!validator.IsValid)
-            {
-                throw new ValidationException(validator.ToString(), validator.Errors);
-            }
-
-            context.Set<T>().Update(item);
-            await context.SaveChangesAsync();
+            
+            item.Id = itemModel.Id;
+            item.CreatedAt = itemModel.CreatedAt;
+            
+            _context.Entry(item).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
-            var item = context.Set<T>().FirstOrDefault(t => t.Id == id);
+            var item = _context.Set<T>().FirstOrDefault(t => t.Id == id);
 
             if (item == null)
             {
                 throw new ArgumentException("Not found.");
             }
 
-            context.Set<T>().Remove(item);
-            await context.SaveChangesAsync();
+            _context.Set<T>().Remove(item);
+            await _context.SaveChangesAsync();
         }
     }
 }
