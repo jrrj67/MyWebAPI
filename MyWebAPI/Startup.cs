@@ -47,7 +47,7 @@ namespace MyWebAPI
 
             services.AddTransient<IValidator<EpisodeRequest>, EpisodeValidator>();
 
-            services.AddTransient<IBaseRepository<Anime>, BaseRepository<Anime>>();
+            services.AddTransient<IBaseRepository<Anime>, AnimeRepository>();
 
             services.AddTransient<IBaseRepository<Episode>, BaseRepository<Episode>>();
         }

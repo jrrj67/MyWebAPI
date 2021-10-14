@@ -22,7 +22,7 @@ namespace MyWebAPI.Data.Repositories
             return _context.Set<T>().ToList();
         }
 
-        public T GetById(int id)
+        public virtual T GetById(int id)
         {
             var item = _context.Set<T>().FirstOrDefault(t => t.Id == id);
 
