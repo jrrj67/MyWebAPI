@@ -49,7 +49,7 @@ namespace MyWebAPI.Controllers
             {
                 var record = _repository.GetById(id);
                 var recordResponse = _mapper.Map<EpisodeResponse>(record);
-                return Ok(record);
+                return Ok(recordResponse);
             }
             catch (ArgumentException ex)
             {
