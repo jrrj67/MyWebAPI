@@ -9,21 +9,26 @@ using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/anime")]
-    public class AnimeController : ControllerBase
+    [Route("api/animes")]
+    public class AnimesController : ControllerBase
     {
-        private readonly ILogger<AnimeController> _logger;
+        private readonly ILogger<AnimesController> _logger;
         private readonly IBaseRepository<Anime> _repository;
+        private readonly IBaseRepository<Episode> _episodeRepository;
         private readonly IMapper _mapper;
 
-        public AnimeController(ILogger<AnimeController> logger, IBaseRepository<Anime> repository, IMapper mapper)
+        public AnimesController(ILogger<AnimesController> logger, IBaseRepository<Anime> repository, IBaseRepository<Episode> episodeRepository,
+            IMapper mapper)
         {
             _logger = logger;
             _repository = repository;
+            _episodeRepository = episodeRepository;
             _mapper = mapper;
         }
 
@@ -33,6 +38,7 @@ namespace MyWebAPI.Controllers
             try
             {
                 var animes = _repository.GetAll();
+                animes.ForEach(a => a.Episodes = _episodeRepository.GetAll().Where(e => e.AnimeId == a.Id).ToList());
                 var animesResponse = _mapper.Map<List<AnimeResponse>>(animes);
                 return Ok(animesResponse);
             }

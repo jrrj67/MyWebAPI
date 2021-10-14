@@ -10,14 +10,14 @@ namespace MyWebAPI.Data.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
     {
-        private readonly ApplicationDbContext _context;
+        protected readonly ApplicationDbContext _context;
 
         public BaseRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public List<T> GetAll()
+        public virtual List<T> GetAll()
         {
             return _context.Set<T>().ToList();
         }

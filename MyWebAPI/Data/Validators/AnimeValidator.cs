@@ -5,9 +5,9 @@ using MyWebAPI.Data.Requests;
 
 namespace MyWebAPI.Data.Validators
 {
-    public class AnimeRequestValidator : AbstractValidator<AnimeRequest>
+    public class AnimeValidator : AbstractValidator<AnimeRequest>
     {
-        public AnimeRequestValidator()
+        public AnimeValidator()
         {
             RuleFor(anime => anime.Name)
                 .NotNull()

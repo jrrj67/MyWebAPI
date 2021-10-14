@@ -14,10 +14,12 @@ namespace MyWebAPI.Data.Config
         }
 
         public DbSet<Anime> Animes { get; set; }
+        public DbSet<Episode> Episodes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             Anime.OnModelCreating(modelBuilder);
+            Episode.OnModelCreating(modelBuilder);
         }
 
         // Logic implemented to add created at and updated at

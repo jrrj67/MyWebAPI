@@ -3,6 +3,7 @@ using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using MyWebAPI.Data.Validators;
 using System;
+using System.Collections.Generic;
 
 namespace MyWebAPI.Data.Models
 {
@@ -11,7 +12,10 @@ namespace MyWebAPI.Data.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime LaunchDate { get; set; }
-        
+
+        // Navigation property
+        public List<Episode> Episodes { get; set; }
+
         public Anime(string name, string description, DateTime launchDate)
         {
             Name = name;
@@ -22,7 +26,11 @@ namespace MyWebAPI.Data.Models
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Anime>().Property(nameof(Name)).IsRequired();
+            modelBuilder.Entity<Anime>().HasIndex(e => e.Name).IsUnique();
+
             modelBuilder.Entity<Anime>().Property(nameof(Description)).IsRequired();
+            
+            modelBuilder.Entity<Anime>().Property(nameof(LaunchDate)).IsRequired();
         }
     }
 }

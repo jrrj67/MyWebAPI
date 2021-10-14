@@ -11,12 +11,19 @@ namespace MyWebAPI.Data.Config
         public AutoMapperConfig()
         {
             Anime();
+            Episode();
         }
         
         private void Anime()
         {
             CreateMap<AnimeRequest, Anime>();
             CreateMap<Anime, AnimeResponse>();
+        }
+        
+        private void Episode()
+        {
+            CreateMap<EpisodeRequest, Episode>();
+            CreateMap<Episode, EpisodeResponse>();
         }
     }
 }

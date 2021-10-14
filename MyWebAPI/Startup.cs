@@ -43,9 +43,13 @@ namespace MyWebAPI
 
             services.AddFluentValidationRulesToSwagger();
 
-            services.AddTransient<IValidator<AnimeRequest>, AnimeRequestValidator>();
+            services.AddTransient<IValidator<AnimeRequest>, AnimeValidator>();
+
+            services.AddTransient<IValidator<EpisodeRequest>, EpisodeValidator>();
 
             services.AddTransient<IBaseRepository<Anime>, BaseRepository<Anime>>();
+
+            services.AddTransient<IBaseRepository<Episode>, BaseRepository<Episode>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,11 +4,14 @@ using MyWebAPI.Data.Validators;
 
 namespace MyWebAPI.Data.Requests
 {
-    public class AnimeRequest
+    public class EpisodeRequest
     {
-        private readonly AnimeValidator _validator = new AnimeValidator();
+        private readonly EpisodeValidator _validator = new EpisodeValidator();
+        public int AnimeId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public int Number { get; set; }
+        public int Season { get; set; }
         public DateTime LaunchDate { get; set; }
 
         public void Validate()
