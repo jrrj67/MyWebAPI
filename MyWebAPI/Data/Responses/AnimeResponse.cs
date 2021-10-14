@@ -1,5 +1,4 @@
-﻿using MyWebAPI.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace MyWebAPI.Data.Responses

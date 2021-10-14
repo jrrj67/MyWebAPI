@@ -1,5 +1,4 @@
 ﻿using System;
-using MyWebAPI.Data.Models;
 
 namespace MyWebAPI.Data.Responses
 {
