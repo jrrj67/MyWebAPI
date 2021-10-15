@@ -58,7 +58,7 @@ namespace MyWebAPI.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             var item = _context.Set<T>().FirstOrDefault(t => t.Id == id);
 

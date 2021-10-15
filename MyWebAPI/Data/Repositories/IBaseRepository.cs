@@ -10,6 +10,6 @@ namespace MyWebAPI.Data.Repositories
         T GetById(int id);
         Task SaveAsync(T item);
         Task UpdateAsync(int id, T item);
-        Task Delete(int id);
+        Task DeleteAsync(int id);
     }
 }

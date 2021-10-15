@@ -1,14 +1,11 @@
 ﻿using System;
-using AutoMapper;
 using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MyWebAPI.Data.Models;
-using MyWebAPI.Data.Repositories;
+using MyWebAPI.Data.Services;
+using System.Threading.Tasks;
 using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace MyWebAPI.Controllers
 {
@@ -17,14 +14,11 @@ namespace MyWebAPI.Controllers
     public class AnimesController : ControllerBase
     {
         private readonly ILogger<AnimesController> _logger;
-        private readonly IBaseRepository<Anime> _repository;
-        private readonly IMapper _mapper;
+        private readonly IBaseService<AnimeResponse, AnimeRequest> _animesService;
 
-        public AnimesController(ILogger<AnimesController> logger, IBaseRepository<Anime> repository, IMapper mapper)
+        public AnimesController(ILogger<AnimesController> logger)
         {
             _logger = logger;
-            _repository = repository;
-            _mapper = mapper;
         }
 
         [HttpGet]   
@@ -32,9 +26,7 @@ namespace MyWebAPI.Controllers
         {
             try
             {
-                var animes = _repository.GetAll();
-                var animesResponse = _mapper.Map<List<AnimeResponse>>(animes);
-                return Ok(animesResponse);
+                return Ok(_animesService.GetAll());
             }
             catch (Exception ex)
             {
@@ -47,9 +39,7 @@ namespace MyWebAPI.Controllers
         {
             try
             {
-                var anime = _repository.GetById(id);
-                var animeResponse = _mapper.Map<AnimeResponse>(anime);
-                return Ok(animeResponse);
+                return Ok(_animesService.GetById(id));
             }
             catch (ArgumentException ex)
             {
@@ -62,15 +52,11 @@ namespace MyWebAPI.Controllers
         }
         
         [HttpPost]   
-        public async Task<IActionResult> SaveAsync(AnimeRequest anime)
+        public async Task<IActionResult> SaveAsync(AnimeRequest request)
         {
             try
             {
-                anime.Validate();
-                var animeModel = _mapper.Map<Anime>(anime);
-                await _repository.SaveAsync(animeModel);
-                var animeResponse = _mapper.Map<AnimeResponse>(animeModel);
-                return Ok(animeResponse);
+                return Ok(await _animesService.SaveAsync(request));
             }
             catch (ValidationException ex)
             {
@@ -83,15 +69,11 @@ namespace MyWebAPI.Controllers
         } 
         
         [HttpPut("{id}")]   
-        public async Task<IActionResult> UpdateAsync(int id, AnimeRequest anime)
+        public async Task<IActionResult> UpdateAsync(int id, AnimeRequest request)
         {
             try
             {
-                anime.Validate();
-                var animeModel = _mapper.Map<Anime>(anime);
-                await _repository.UpdateAsync(id, animeModel);
-                var animeResponse = _mapper.Map<AnimeResponse>(animeModel);
-                return Ok(animeResponse);
+                return Ok(await _animesService.UpdateAsync(id, request));
             }
             catch (ValidationException ex)
             {
@@ -108,11 +90,11 @@ namespace MyWebAPI.Controllers
         }
         
         [HttpDelete("{id}")]   
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             try
             {
-                await _repository.Delete(id);
+                await _animesService.DeleteAsync(id);
                 return Ok();
             }
             catch (ArgumentException ex)

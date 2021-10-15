@@ -1,14 +1,11 @@
 ﻿using System;
-using AutoMapper;
 using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MyWebAPI.Data.Models;
-using MyWebAPI.Data.Repositories;
+using MyWebAPI.Data.Services;
+using System.Threading.Tasks;
 using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace MyWebAPI.Controllers
 {
@@ -17,14 +14,11 @@ namespace MyWebAPI.Controllers
     public class EpisodesController : ControllerBase
     {
         private readonly ILogger<EpisodesController> _logger;
-        private readonly IBaseRepository<Episode> _repository;
-        private readonly IMapper _mapper;
+        private readonly IBaseService<EpisodeResponse, EpisodeRequest> _episodesService;
 
-        public EpisodesController(ILogger<EpisodesController> logger, IBaseRepository<Episode> repository, IMapper mapper)
+        public EpisodesController(ILogger<EpisodesController> logger)
         {
             _logger = logger;
-            _repository = repository;
-            _mapper = mapper;
         }
 
         [HttpGet]   
@@ -32,9 +26,7 @@ namespace MyWebAPI.Controllers
         {
             try
             {
-                var records = _repository.GetAll();
-                var recordResponse = _mapper.Map<List<EpisodeResponse>>(records);
-                return Ok(recordResponse);
+                return Ok(_episodesService.GetAll());
             }
             catch (Exception ex)
             {
@@ -47,9 +39,7 @@ namespace MyWebAPI.Controllers
         {
             try
             {
-                var record = _repository.GetById(id);
-                var recordResponse = _mapper.Map<EpisodeResponse>(record);
-                return Ok(recordResponse);
+                return Ok(_episodesService.GetById(id));
             }
             catch (ArgumentException ex)
             {
@@ -66,11 +56,7 @@ namespace MyWebAPI.Controllers
         {
             try
             {
-                request.Validate();
-                var requestModel = _mapper.Map<Episode>(request);
-                await _repository.SaveAsync(requestModel);
-                var response = _mapper.Map<EpisodeResponse>(requestModel);
-                return Ok(response);
+                return Ok(await _episodesService.SaveAsync(request));
             }
             catch (ValidationException ex)
             {
@@ -87,11 +73,7 @@ namespace MyWebAPI.Controllers
         {
             try
             {
-                request.Validate();
-                var requestModel = _mapper.Map<Episode>(request);
-                await _repository.UpdateAsync(id, requestModel);
-                var response = _mapper.Map<EpisodeResponse>(requestModel);
-                return Ok(response);
+                return Ok(await _episodesService.UpdateAsync(id, request));
             }
             catch (ValidationException ex)
             {
@@ -108,11 +90,11 @@ namespace MyWebAPI.Controllers
         }
         
         [HttpDelete("{id}")]   
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             try
             {
-                await _repository.Delete(id);
+                await _episodesService.DeleteAsync(id);
                 return Ok();
             }
             catch (ArgumentException ex)

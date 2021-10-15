@@ -12,6 +12,8 @@ using MyWebAPI.Data.Config;
 using MyWebAPI.Data.Models;
 using MyWebAPI.Data.Repositories;
 using MyWebAPI.Data.Requests;
+using MyWebAPI.Data.Responses;
+using MyWebAPI.Data.Services;
 using MyWebAPI.Data.Validators;
 
 namespace MyWebAPI
@@ -52,6 +54,10 @@ namespace MyWebAPI
             services.AddTransient<IBaseRepository<Anime>, BaseRepository<Anime>>();
 
             services.AddTransient<IBaseRepository<Episode>, BaseRepository<Episode>>();
+
+            services.AddTransient<IBaseService<AnimeResponse, AnimeRequest>, AnimesService>();
+
+            services.AddTransient<IBaseService<EpisodeResponse, EpisodeRequest>, EpisodesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
