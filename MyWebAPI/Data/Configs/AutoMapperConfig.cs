@@ -4,7 +4,7 @@ using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;
 using System.Linq;
 
-namespace MyWebAPI.Data.Config
+namespace MyWebAPI.Data.Configs
 {
     public class AutoMapperConfig : Profile
     {

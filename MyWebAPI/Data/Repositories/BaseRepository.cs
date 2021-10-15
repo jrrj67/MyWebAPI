@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MyWebAPI.Data.Config;
+using MyWebAPI.Data.Contexts;
 using MyWebAPI.Data.Models;
 using System;
 using System.Collections.Generic;

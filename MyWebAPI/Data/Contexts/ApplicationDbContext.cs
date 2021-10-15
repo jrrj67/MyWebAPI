@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MyWebAPI.Data.Config
+namespace MyWebAPI.Data.Contexts
 {
     public class ApplicationDbContext : DbContext
     {
