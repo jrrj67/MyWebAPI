@@ -16,9 +16,10 @@ namespace MyWebAPI.Controllers
         private readonly ILogger<AnimesController> _logger;
         private readonly IBaseService<AnimeResponse, AnimeRequest> _animesService;
 
-        public AnimesController(ILogger<AnimesController> logger)
+        public AnimesController(ILogger<AnimesController> logger, IBaseService<AnimeResponse, AnimeRequest> animesService)
         {
             _logger = logger;
+            _animesService = animesService;
         }
 
         [HttpGet]   
