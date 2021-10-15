@@ -13,7 +13,7 @@ namespace MyWebAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LaunchDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -30,7 +30,7 @@ namespace MyWebAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Number = table.Column<int>(type: "int", nullable: false),
                     Season = table.Column<int>(type: "int", nullable: false),
@@ -51,27 +51,9 @@ namespace MyWebAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Animes_Name",
-                table: "Animes",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Episodes_AnimeId",
                 table: "Episodes",
                 column: "AnimeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Episodes_Name",
-                table: "Episodes",
-                column: "Name",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Episodes_Number",
-                table: "Episodes",
-                column: "Number",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

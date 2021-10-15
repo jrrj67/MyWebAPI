@@ -31,12 +31,10 @@ namespace MyWebAPI.Data.Models
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Episode>().Property(nameof(Name)).IsRequired();
-            modelBuilder.Entity<Episode>().HasIndex(e => e.Name).IsUnique();
 
             modelBuilder.Entity<Episode>().Property(nameof(Description)).IsRequired();
 
             modelBuilder.Entity<Episode>().Property(nameof(Number)).IsRequired();
-            modelBuilder.Entity<Episode>().HasIndex(e => e.Number).IsUnique();
             
             modelBuilder.Entity<Episode>().Property(nameof(Season)).IsRequired();
             

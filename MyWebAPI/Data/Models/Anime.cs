@@ -26,7 +26,6 @@ namespace MyWebAPI.Data.Models
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Anime>().Property(nameof(Name)).IsRequired();
-            modelBuilder.Entity<Anime>().HasIndex(e => e.Name).IsUnique();
 
             modelBuilder.Entity<Anime>().Property(nameof(Description)).IsRequired();
             
