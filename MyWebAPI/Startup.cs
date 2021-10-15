@@ -9,13 +9,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MyWebAPI.Data.Contexts;
-using MyWebAPI.Data.Configs;
 using MyWebAPI.Data.Models;
 using MyWebAPI.Data.Repositories;
 using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;
 using MyWebAPI.Data.Services;
 using MyWebAPI.Data.Validators;
+using System;
 
 namespace MyWebAPI
 {
@@ -37,7 +37,7 @@ namespace MyWebAPI
                 .UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("Default")));
 
-            services.AddAutoMapper(typeof(AutoMapperConfig));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddFluentValidation();
 
