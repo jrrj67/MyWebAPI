@@ -30,7 +30,9 @@ namespace MyWebAPI
         {
             services.AddControllers();
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<ApplicationDbContext>(options => options
+                .UseLazyLoadingProxies()
+                .UseSqlServer(Configuration.GetConnectionString("Default")));
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
 
@@ -47,7 +49,7 @@ namespace MyWebAPI
 
             services.AddTransient<IValidator<EpisodeRequest>, EpisodeValidator>();
 
-            services.AddTransient<IBaseRepository<Anime>, AnimeRepository>();
+            services.AddTransient<IBaseRepository<Anime>, BaseRepository<Anime>>();
 
             services.AddTransient<IBaseRepository<Episode>, BaseRepository<Episode>>();
         }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MyWebAPI.Data.Models;
+using System;
+using System.Text.Json.Serialization;
 
 namespace MyWebAPI.Data.Responses
 {
@@ -13,6 +15,6 @@ namespace MyWebAPI.Data.Responses
         public DateTime LaunchDate { get; set; }
 
         // Navigation property
-        //public Anime Anime { get; set; }
+        public object Anime { get; set; }
     }
 }

@@ -11,6 +11,6 @@ namespace MyWebAPI.Data.Responses
         public DateTime LaunchDate { get; set; }
 
         // Navigation property
-        public List<EpisodeResponse> Episodes { get; set; }
+        public object Episodes { get; set; }
     }
 }

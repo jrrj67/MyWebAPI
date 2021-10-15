@@ -14,7 +14,7 @@ namespace MyWebAPI.Data.Models
         public DateTime LaunchDate { get; set; }
 
         // Navigation property
-        public List<Episode> Episodes { get; set; }
+        public virtual List<Episode> Episodes { get; set; }
 
         public Anime(string name, string description, DateTime launchDate)
         {

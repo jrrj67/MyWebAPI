@@ -17,7 +17,7 @@ namespace MyWebAPI.Data.Models
         public int AnimeId { get; set; }
 
         // Navigation property
-        public Anime Anime { get; set; }
+        public virtual Anime Anime { get; set; }
 
         public Episode(string name, string description, int number, int season, DateTime launchDate)
         {

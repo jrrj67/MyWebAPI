@@ -2,7 +2,7 @@
 using MyWebAPI.Data.Models;
 using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace MyWebAPI.Data.Config
 {
@@ -17,13 +17,17 @@ namespace MyWebAPI.Data.Config
         private void Anime()
         {
             CreateMap<AnimeRequest, Anime>();
-            CreateMap<Anime, AnimeResponse>();
+            CreateMap<Anime, AnimeResponse>()
+                .ForMember(a => a.Episodes, opts => opts
+                .MapFrom(a => a.Episodes.Select(e => new { e.Id, e.Name, e.Description })));
         }
         
         private void Episode()
         {
             CreateMap<EpisodeRequest, Episode>();
-            CreateMap<Episode, EpisodeResponse>();
+            CreateMap<Episode, EpisodeResponse>()
+                .ForMember(e => e.Anime, opts => opts
+                .MapFrom(e => new { e.Id, e.Name, e.Description, e.LaunchDate }));
         }
     }
 }
