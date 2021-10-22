@@ -8,43 +8,43 @@ using System.Threading.Tasks;
 
 namespace MyWebAPI.Data.Services
 {
-    public class AnimesService : IBaseService<AnimeResponse, AnimeRequest>
+    public class AnimesService : IBaseService<AnimesResponse, AnimesRequest>
     {
-        private readonly IBaseRepository<Anime> _repository;
+        private readonly IBaseRepository<AnimeEntity> _repository;
         private readonly IMapper _mapper;
 
-        public AnimesService(IBaseRepository<Anime> repository, IMapper mapper)
+        public AnimesService(IBaseRepository<AnimeEntity> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
 
-        public List<AnimeResponse> GetAll()
+        public List<AnimesResponse> GetAll()
         {
             var response = _repository.GetAll();
-            return _mapper.Map<List<AnimeResponse>>(response);
+            return _mapper.Map<List<AnimesResponse>>(response);
         }
 
-        public AnimeResponse GetById(int id)
+        public AnimesResponse GetById(int id)
         {
             var response = _repository.GetById(id);
-            return _mapper.Map<AnimeResponse>(response);
+            return _mapper.Map<AnimesResponse>(response);
         }
 
-        public async Task<AnimeResponse> SaveAsync(AnimeRequest request)
+        public async Task<AnimesResponse> SaveAsync(AnimesRequest request)
         {
             request.Validate();
-            var requestModel = _mapper.Map<Anime>(request);
+            var requestModel = _mapper.Map<AnimeEntity>(request);
             await _repository.SaveAsync(requestModel);
-            return _mapper.Map<AnimeResponse>(requestModel);
+            return _mapper.Map<AnimesResponse>(requestModel);
         }
 
-        public async Task<AnimeResponse> UpdateAsync(int id, AnimeRequest request)
+        public async Task<AnimesResponse> UpdateAsync(int id, AnimesRequest request)
         {
             request.Validate();
-            var requestModel = _mapper.Map<Anime>(request);
+            var requestModel = _mapper.Map<AnimeEntity>(request);
             await _repository.UpdateAsync(id, requestModel);
-            return _mapper.Map<AnimeResponse>(requestModel);
+            return _mapper.Map<AnimesResponse>(requestModel);
         }
 
         public async Task DeleteAsync(int id)

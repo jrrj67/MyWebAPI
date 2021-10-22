@@ -1,13 +1,12 @@
 ﻿using System;
 using FluentValidation;
-using MyWebAPI.Data.Models;
 using MyWebAPI.Data.Requests;
 
 namespace MyWebAPI.Data.Validators
 {
-    public class AnimeValidator : AbstractValidator<AnimeRequest>
+    public class AnimesValidator : AbstractValidator<AnimesRequest>
     {
-        public AnimeValidator()
+        public AnimesValidator()
         {
             RuleFor(anime => anime.Name)
                 .NotNull()

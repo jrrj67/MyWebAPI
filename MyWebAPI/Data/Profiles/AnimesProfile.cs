@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MyWebAPI.Data.Models;
+using MyWebAPI.Data.Entities;
 using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;
 using System.Linq;
@@ -10,9 +10,9 @@ namespace MyWebAPI.Data.Profiles
     {
         public AnimesProfile()
         {
-            CreateMap<AnimeRequest, Anime>();
+            CreateMap<AnimesRequest, AnimesEntity>();
 
-            CreateMap<Anime, AnimeResponse>()
+            CreateMap<AnimesEntity, AnimesResponse>()
                 .ForMember(a => a.Episodes, opts => opts
                 .MapFrom(a => a.Episodes.Select(e => new { e.Id, e.Name, e.Description })));
         }

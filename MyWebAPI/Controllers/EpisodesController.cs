@@ -14,9 +14,9 @@ namespace MyWebAPI.Controllers
     public class EpisodesController : ControllerBase
     {
         private readonly ILogger<EpisodesController> _logger;
-        private readonly IBaseService<EpisodeResponse, EpisodeRequest> _episodesService;
+        private readonly IBaseService<EpisodesResponse, EpisodesRequest> _episodesService;
 
-        public EpisodesController(ILogger<EpisodesController> logger, IBaseService<EpisodeResponse, EpisodeRequest> episodesService)
+        public EpisodesController(ILogger<EpisodesController> logger, IBaseService<EpisodesResponse, EpisodesRequest> episodesService)
         {
             _logger = logger;
             _episodesService = episodesService;
@@ -53,7 +53,7 @@ namespace MyWebAPI.Controllers
         }
         
         [HttpPost]   
-        public async Task<IActionResult> SaveAsync(EpisodeRequest request)
+        public async Task<IActionResult> SaveAsync(EpisodesRequest request)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace MyWebAPI.Controllers
         } 
         
         [HttpPut("{id}")]   
-        public async Task<IActionResult> UpdateAsync(int id, EpisodeRequest request)
+        public async Task<IActionResult> UpdateAsync(int id, EpisodesRequest request)
         {
             try
             {

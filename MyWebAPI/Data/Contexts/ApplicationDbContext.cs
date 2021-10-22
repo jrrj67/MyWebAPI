@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyWebAPI.Data.Entities;
 using MyWebAPI.Data.Models;
 using System;
 using System.Linq;
@@ -9,17 +10,19 @@ namespace MyWebAPI.Data.Contexts
 {
     public class ApplicationDbContext : DbContext
     {
+        public DbSet<AnimesEntity> Animes { get; set; }
+        public DbSet<EpisodesEntity> Episodes { get; set; }
+        public DbSet<UsersEntity> Users { get; set; }
+
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
-
-        public DbSet<Anime> Animes { get; set; }
-        public DbSet<Episode> Episodes { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Anime.OnModelCreating(modelBuilder);
-            Episode.OnModelCreating(modelBuilder);
+            UsersEntity.OnModelCreating(modelBuilder);
+            AnimesEntity.OnModelCreating(modelBuilder);
+            EpisodesEntity.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
         // Logic implemented to add created at and updated at

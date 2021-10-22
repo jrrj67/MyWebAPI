@@ -4,9 +4,9 @@ using MyWebAPI.Data.Validators;
 
 namespace MyWebAPI.Data.Requests
 {
-    public class AnimeRequest
+    public class AnimesRequest
     {
-        private readonly AnimeValidator _validator = new AnimeValidator();
+        private readonly AnimesValidator _validator = new AnimesValidator();
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime LaunchDate { get; set; }

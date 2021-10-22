@@ -8,43 +8,43 @@ using System.Threading.Tasks;
 
 namespace MyWebAPI.Data.Services
 {
-    public class EpisodesService : IBaseService<EpisodeResponse, EpisodeRequest>
+    public class EpisodesService : IBaseService<EpisodesResponse, EpisodesRequest>
     {
-        private readonly IBaseRepository<Episode> _repository;
+        private readonly IBaseRepository<EpisodeEntity> _repository;
         private readonly IMapper _mapper;
 
-        public EpisodesService(IBaseRepository<Episode> repository, IMapper mapper)
+        public EpisodesService(IBaseRepository<EpisodeEntity> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
 
-        public List<EpisodeResponse> GetAll()
+        public List<EpisodesResponse> GetAll()
         {
             var response = _repository.GetAll();
-            return _mapper.Map<List<EpisodeResponse>>(response);
+            return _mapper.Map<List<EpisodesResponse>>(response);
         }
 
-        public EpisodeResponse GetById(int id)
+        public EpisodesResponse GetById(int id)
         {
             var response = _repository.GetById(id);
-            return _mapper.Map<EpisodeResponse>(response);
+            return _mapper.Map<EpisodesResponse>(response);
         }
 
-        public async Task<EpisodeResponse> SaveAsync(EpisodeRequest request)
+        public async Task<EpisodesResponse> SaveAsync(EpisodesRequest request)
         {
             request.Validate();
-            var requestModel = _mapper.Map<Episode>(request);
+            var requestModel = _mapper.Map<EpisodeEntity>(request);
             await _repository.SaveAsync(requestModel);
-            return _mapper.Map<EpisodeResponse>(requestModel);
+            return _mapper.Map<EpisodesResponse>(requestModel);
         }
 
-        public async Task<EpisodeResponse> UpdateAsync(int id, EpisodeRequest request)
+        public async Task<EpisodesResponse> UpdateAsync(int id, EpisodesRequest request)
         {
             request.Validate();
-            var requestModel = _mapper.Map<Episode>(request);
+            var requestModel = _mapper.Map<EpisodeEntity>(request);
             await _repository.UpdateAsync(id, requestModel);
-            return _mapper.Map<EpisodeResponse>(requestModel);
+            return _mapper.Map<EpisodesResponse>(requestModel);
         }
 
         public async Task DeleteAsync(int id)

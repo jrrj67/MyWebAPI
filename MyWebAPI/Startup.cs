@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MyWebAPI.Data.Contexts;
-using MyWebAPI.Data.Models;
+using MyWebAPI.Data.Entities;
 using MyWebAPI.Data.Repositories;
 using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;
@@ -48,17 +48,17 @@ namespace MyWebAPI
 
             services.AddFluentValidationRulesToSwagger();
 
-            services.AddTransient<IValidator<AnimeRequest>, AnimeValidator>();
+            services.AddTransient<IValidator<AnimesRequest>, AnimesValidator>();
 
-            services.AddTransient<IValidator<EpisodeRequest>, EpisodeValidator>();
+            services.AddTransient<IValidator<EpisodesRequest>, EpisodesValidator>();
 
-            services.AddTransient<IBaseRepository<Anime>, BaseRepository<Anime>>();
+            services.AddTransient<IBaseRepository<AnimesEntity>, BaseRepository<AnimesEntity>>();
 
-            services.AddTransient<IBaseRepository<Episode>, BaseRepository<Episode>>();
+            services.AddTransient<IBaseRepository<EpisodesEntity>, BaseRepository<EpisodesEntity>>();
 
-            services.AddTransient<IBaseService<AnimeResponse, AnimeRequest>, AnimesService>();
+            services.AddTransient<IBaseService<AnimesResponse, AnimesRequest>, AnimesService>();
 
-            services.AddTransient<IBaseService<EpisodeResponse, EpisodeRequest>, EpisodesService>();
+            services.AddTransient<IBaseService<EpisodesResponse, EpisodesRequest>, EpisodesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

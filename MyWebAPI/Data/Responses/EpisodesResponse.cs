@@ -1,10 +1,8 @@
-﻿using MyWebAPI.Data.Models;
-using System;
-using System.Text.Json.Serialization;
+﻿using System;
 
 namespace MyWebAPI.Data.Responses
 {
-    public class EpisodeResponse
+    public class EpisodesResponse
     {
         public int Id { get; set; }
         public int AnimeId { get; set; }
