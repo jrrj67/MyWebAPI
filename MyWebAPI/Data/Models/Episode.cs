@@ -1,11 +1,8 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 
 namespace MyWebAPI.Data.Models
 {
-    public class EpisodeEntity : BaseModel
+    public class Episode : BaseModel
     {
         public string Name { get; set; }
         public string Description { get; set; }

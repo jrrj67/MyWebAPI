@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MyWebAPI.Data.Entities
 {
-    public class AnimesEntity : AnimeEntity
+    public class AnimesEntity : Anime
     {
         public virtual List<EpisodesEntity> Episodes { get; set; }
 

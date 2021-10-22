@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MyWebAPI.Data.Entities;
 using MyWebAPI.Data.Models;
 using MyWebAPI.Data.Repositories;
 using MyWebAPI.Data.Requests;
@@ -10,10 +11,10 @@ namespace MyWebAPI.Data.Services
 {
     public class AnimesService : IBaseService<AnimesResponse, AnimesRequest>
     {
-        private readonly IBaseRepository<AnimeEntity> _repository;
+        private readonly IBaseRepository<AnimesEntity> _repository;
         private readonly IMapper _mapper;
 
-        public AnimesService(IBaseRepository<AnimeEntity> repository, IMapper mapper)
+        public AnimesService(IBaseRepository<AnimesEntity> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -34,7 +35,7 @@ namespace MyWebAPI.Data.Services
         public async Task<AnimesResponse> SaveAsync(AnimesRequest request)
         {
             request.Validate();
-            var requestModel = _mapper.Map<AnimeEntity>(request);
+            var requestModel = _mapper.Map<AnimesEntity>(request);
             await _repository.SaveAsync(requestModel);
             return _mapper.Map<AnimesResponse>(requestModel);
         }
@@ -42,7 +43,7 @@ namespace MyWebAPI.Data.Services
         public async Task<AnimesResponse> UpdateAsync(int id, AnimesRequest request)
         {
             request.Validate();
-            var requestModel = _mapper.Map<AnimeEntity>(request);
+            var requestModel = _mapper.Map<AnimesEntity>(request);
             await _repository.UpdateAsync(id, requestModel);
             return _mapper.Map<AnimesResponse>(requestModel);
         }

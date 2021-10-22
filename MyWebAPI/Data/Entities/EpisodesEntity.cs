@@ -4,7 +4,7 @@ using System;
 
 namespace MyWebAPI.Data.Entities
 {
-    public class EpisodesEntity : EpisodeEntity
+    public class EpisodesEntity : Episode
     {
         public virtual AnimesEntity Anime { get; set; }
 

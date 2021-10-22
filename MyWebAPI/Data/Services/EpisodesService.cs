@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MyWebAPI.Data.Models;
+using MyWebAPI.Data.Entities;
 using MyWebAPI.Data.Repositories;
 using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;
@@ -10,10 +10,10 @@ namespace MyWebAPI.Data.Services
 {
     public class EpisodesService : IBaseService<EpisodesResponse, EpisodesRequest>
     {
-        private readonly IBaseRepository<EpisodeEntity> _repository;
+        private readonly IBaseRepository<EpisodesEntity> _repository;
         private readonly IMapper _mapper;
 
-        public EpisodesService(IBaseRepository<EpisodeEntity> repository, IMapper mapper)
+        public EpisodesService(IBaseRepository<EpisodesEntity> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -34,7 +34,7 @@ namespace MyWebAPI.Data.Services
         public async Task<EpisodesResponse> SaveAsync(EpisodesRequest request)
         {
             request.Validate();
-            var requestModel = _mapper.Map<EpisodeEntity>(request);
+            var requestModel = _mapper.Map<EpisodesEntity>(request);
             await _repository.SaveAsync(requestModel);
             return _mapper.Map<EpisodesResponse>(requestModel);
         }
@@ -42,7 +42,7 @@ namespace MyWebAPI.Data.Services
         public async Task<EpisodesResponse> UpdateAsync(int id, EpisodesRequest request)
         {
             request.Validate();
-            var requestModel = _mapper.Map<EpisodeEntity>(request);
+            var requestModel = _mapper.Map<EpisodesEntity>(request);
             await _repository.UpdateAsync(id, requestModel);
             return _mapper.Map<EpisodesResponse>(requestModel);
         }
