@@ -16,6 +16,7 @@ using MyWebAPI.Data.Responses;
 using MyWebAPI.Data.Services;
 using MyWebAPI.Data.Validators;
 using System;
+using System.Linq;
 
 namespace MyWebAPI
 {
@@ -35,7 +36,7 @@ namespace MyWebAPI
 
             services.AddDbContext<ApplicationDbContext>(options => options
                 .UseLazyLoadingProxies()
-                .UseSqlServer(Configuration.GetConnectionString("Default")));
+                .UseMySQL(Configuration.GetConnectionString("Default")));
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -62,7 +63,7 @@ namespace MyWebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)
         {
             if (env.IsDevelopment())
             {
