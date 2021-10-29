@@ -1,6 +1,6 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using MyWebAPI.Data.Requests;
+using System;
 
 namespace MyWebAPI.Data.Validators
 {
@@ -10,7 +10,7 @@ namespace MyWebAPI.Data.Validators
         {
             RuleFor(field => field.AnimeId)
                 .NotNull();
-            
+
             RuleFor(field => field.Name)
                 .NotNull()
                 .MaximumLength(100);
@@ -21,10 +21,10 @@ namespace MyWebAPI.Data.Validators
 
             RuleFor(field => field.Number)
                 .NotNull();
-            
+
             RuleFor(field => field.Season)
                 .NotNull();
-            
+
             RuleFor(field => field.LaunchDate)
                 .NotNull()
                 .LessThanOrEqualTo(DateTime.UtcNow);

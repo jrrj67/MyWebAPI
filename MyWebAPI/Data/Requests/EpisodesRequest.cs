@@ -1,6 +1,6 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using MyWebAPI.Data.Validators;
+using System;
 
 namespace MyWebAPI.Data.Requests
 {

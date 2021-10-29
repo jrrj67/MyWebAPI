@@ -1,5 +1,4 @@
-﻿using MyWebAPI.Data.Responses;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MyWebAPI.Data.Services

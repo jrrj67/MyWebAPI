@@ -1,11 +1,11 @@
-﻿using System;
-using FluentValidation;
-using MyWebAPI.Data.Services;
-using System.Threading.Tasks;
-using MyWebAPI.Data.Requests;
-using MyWebAPI.Data.Responses;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MyWebAPI.Data.Requests;
+using MyWebAPI.Data.Responses;
+using MyWebAPI.Data.Services;
+using System;
+using System.Threading.Tasks;
 
 namespace MyWebAPI.Controllers
 {
@@ -22,7 +22,7 @@ namespace MyWebAPI.Controllers
             _usersService = usersService;
         }
 
-        [HttpGet]   
+        [HttpGet]
         public IActionResult GetAll()
         {
             try
@@ -33,9 +33,9 @@ namespace MyWebAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        } 
-        
-        [HttpGet("{id}")]   
+        }
+
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             try
@@ -51,8 +51,8 @@ namespace MyWebAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
-        [HttpPost]   
+
+        [HttpPost]
         public async Task<IActionResult> SaveAsync(UsersRequest request)
         {
             try
@@ -67,9 +67,9 @@ namespace MyWebAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        } 
-        
-        [HttpPut("{id}")]   
+        }
+
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(int id, UsersRequest request)
         {
             try
@@ -89,8 +89,8 @@ namespace MyWebAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
-        [HttpDelete("{id}")]   
+
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             try
@@ -106,6 +106,6 @@ namespace MyWebAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        } 
+        }
     }
 }

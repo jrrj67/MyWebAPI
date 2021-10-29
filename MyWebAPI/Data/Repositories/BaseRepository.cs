@@ -50,10 +50,10 @@ namespace MyWebAPI.Data.Repositories
             {
                 throw new ArgumentException("Not found.");
             }
-            
+
             item.Id = itemModel.Id;
             item.CreatedAt = itemModel.CreatedAt;
-            
+
             _context.Entry(item).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }

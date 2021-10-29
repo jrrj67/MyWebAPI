@@ -1,6 +1,4 @@
-﻿using FluentValidation.Results;
-using System;
-using System.Text.Json.Serialization;
+﻿using System;
 
 namespace MyWebAPI.Data.Models
 {

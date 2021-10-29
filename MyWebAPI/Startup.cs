@@ -16,7 +16,6 @@ using MyWebAPI.Data.Responses;
 using MyWebAPI.Data.Services;
 using MyWebAPI.Data.Validators;
 using System;
-using System.Linq;
 
 namespace MyWebAPI
 {
@@ -53,13 +52,19 @@ namespace MyWebAPI
 
             services.AddTransient<IValidator<EpisodesRequest>, EpisodesValidator>();
 
+            services.AddTransient<IValidator<UsersRequest>, UsersValidator>();
+
             services.AddTransient<IBaseRepository<AnimesEntity>, BaseRepository<AnimesEntity>>();
 
             services.AddTransient<IBaseRepository<EpisodesEntity>, BaseRepository<EpisodesEntity>>();
 
+            services.AddTransient<IBaseRepository<UsersEntity>, BaseRepository<UsersEntity>>();
+
             services.AddTransient<IBaseService<AnimesResponse, AnimesRequest>, AnimesService>();
 
             services.AddTransient<IBaseService<EpisodesResponse, EpisodesRequest>, EpisodesService>();
+
+            services.AddTransient<IBaseService<UsersResponse, UsersRequest>, UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

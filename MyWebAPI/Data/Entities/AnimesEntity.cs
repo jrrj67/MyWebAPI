@@ -15,7 +15,7 @@ namespace MyWebAPI.Data.Entities
             Description = description;
             LaunchDate = launchDate;
         }
-        
+
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AnimesEntity>().Property(nameof(Name)).IsRequired();

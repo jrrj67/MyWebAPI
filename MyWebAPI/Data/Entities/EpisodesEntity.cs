@@ -16,7 +16,7 @@ namespace MyWebAPI.Data.Entities
             Season = season;
             LaunchDate = launchDate;
         }
-        
+
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EpisodesEntity>().Property(nameof(Name)).IsRequired();

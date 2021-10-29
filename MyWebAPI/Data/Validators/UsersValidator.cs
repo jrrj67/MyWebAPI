@@ -1,5 +1,4 @@
-﻿using System;
-using FluentValidation;
+﻿using FluentValidation;
 using MyWebAPI.Data.Requests;
 
 namespace MyWebAPI.Data.Validators
@@ -12,7 +11,7 @@ namespace MyWebAPI.Data.Validators
                 .MinimumLength(2)
                 .MaximumLength(200)
                 .NotNull();
-            
+
             RuleFor(field => field.Password)
                 .NotNull()
                 .MinimumLength(5)
