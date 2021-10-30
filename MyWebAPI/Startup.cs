@@ -1,20 +1,17 @@
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyWebAPI.Data.Contexts;
-using MyWebAPI.Data.Entities;
-using MyWebAPI.Data.Repositories;
-using MyWebAPI.Data.Requests;
-using MyWebAPI.Data.Responses;
+using MyWebAPI.Data.DependecyInjections;
 using MyWebAPI.Data.Services;
-using MyWebAPI.Data.Validators;
 using System;
 
 namespace MyWebAPI
@@ -33,6 +30,23 @@ namespace MyWebAPI
         {
             services.AddControllers();
 
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(opt =>
+            {
+                opt.RequireHttpsMetadata = false;
+                opt.SaveToken = true;
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(TokenService.GetSecretKey(Configuration)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
             services.AddDbContext<ApplicationDbContext>(options => options
                 .UseLazyLoadingProxies()
                 .UseMySQL(Configuration.GetConnectionString("Default")));
@@ -48,23 +62,13 @@ namespace MyWebAPI
 
             services.AddFluentValidationRulesToSwagger();
 
-            services.AddTransient<IValidator<AnimesRequest>, AnimesValidator>();
+            services.AddTransient<ITokenService, TokenService>();
 
-            services.AddTransient<IValidator<EpisodesRequest>, EpisodesValidator>();
+            AnimesDI.RegisterDependencies(services);
 
-            services.AddTransient<IValidator<UsersRequest>, UsersValidator>();
+            EpisodesDI.RegisterDependencies(services);
 
-            services.AddTransient<IBaseRepository<AnimesEntity>, BaseRepository<AnimesEntity>>();
-
-            services.AddTransient<IBaseRepository<EpisodesEntity>, BaseRepository<EpisodesEntity>>();
-
-            services.AddTransient<IBaseRepository<UsersEntity>, BaseRepository<UsersEntity>>();
-
-            services.AddTransient<IBaseService<AnimesResponse, AnimesRequest>, AnimesService>();
-
-            services.AddTransient<IBaseService<EpisodesResponse, EpisodesRequest>, EpisodesService>();
-
-            services.AddTransient<IBaseService<UsersResponse, UsersRequest>, UsersService>();
+            UsersDI.RegisterDependencies(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,6 +84,8 @@ namespace MyWebAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

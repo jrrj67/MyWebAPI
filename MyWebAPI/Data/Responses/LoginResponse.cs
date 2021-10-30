@@ -1,0 +1,10 @@
+﻿using System;
+
+namespace MyWebAPI.Data.Responses
+{
+    public class LoginResponse
+    {
+        public UsersResponse UserResponse { get; set; }
+        public string Token { get; set; }
+    }
+}

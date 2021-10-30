@@ -14,9 +14,9 @@ namespace MyWebAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ILogger<UsersController> _logger;
-        private readonly IBaseService<UsersResponse, UsersRequest> _usersService;
+        private readonly IUsersService<UsersResponse, UsersRequest> _usersService;
 
-        public UsersController(ILogger<UsersController> logger, IBaseService<UsersResponse, UsersRequest> usersService)
+        public UsersController(ILogger<UsersController> logger, IUsersService<UsersResponse, UsersRequest> usersService)
         {
             _logger = logger;
             _usersService = usersService;
