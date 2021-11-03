@@ -11,6 +11,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyWebAPI.Data.Contexts;
 using MyWebAPI.Data.DependecyInjections;
+using MyWebAPI.Data.Requests;
+using MyWebAPI.Data.Responses;
 using MyWebAPI.Data.Services;
 using System;
 
@@ -63,6 +65,8 @@ namespace MyWebAPI
             services.AddFluentValidationRulesToSwagger();
 
             services.AddTransient<ITokenService, TokenService>();
+
+            services.AddTransient<ILoginService<LoginResponse, LoginRequest>, LoginService>();
 
             AnimesDI.RegisterDependencies(services);
 

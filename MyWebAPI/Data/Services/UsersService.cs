@@ -10,17 +10,15 @@ using System.Threading.Tasks;
 
 namespace MyWebAPI.Data.Services
 {
-    public class UsersService : IUsersService<UsersResponse, UsersRequest>
+    public class UsersService : IBaseService<UsersResponse, UsersRequest>
     {
         private readonly IBaseRepository<UsersEntity> _repository;
         private readonly IMapper _mapper;
-        private readonly ITokenService _tokenService;
 
-        public UsersService(IBaseRepository<UsersEntity> repository, IMapper mapper, ITokenService tokenService)
+        public UsersService(IBaseRepository<UsersEntity> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _tokenService = tokenService;
         }
 
         public List<UsersResponse> GetAll()
@@ -56,31 +54,6 @@ namespace MyWebAPI.Data.Services
         public async Task DeleteAsync(int id)
         {
             await _repository.DeleteAsync(id);
-        }
-
-        public LoginResponse Login(UsersRequest userRequest)
-        {
-            userRequest.Validate();
-         
-            var userEntity = _repository
-                .GetAll()
-                .Where(u => u.Email == userRequest.Email && BCrypt.Net.BCrypt.Verify(userRequest.Password, u.Password))
-                .FirstOrDefault();
-
-            if (userEntity == null)
-            {
-                throw new ArgumentException("Wrong credentials provided.");
-            }
-
-            var token = _tokenService.GenerateToken(userEntity);
-
-            var userResponse = _mapper.Map<UsersResponse>(userEntity);
-
-            return new LoginResponse
-            {
-                UserResponse = userResponse,
-                Token = token
-            };
         }
     }
 }

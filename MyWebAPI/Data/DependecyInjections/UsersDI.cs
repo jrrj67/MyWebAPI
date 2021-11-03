@@ -17,7 +17,7 @@ namespace MyWebAPI.Data.DependecyInjections
 
             services.AddTransient<IBaseRepository<UsersEntity>, BaseRepository<UsersEntity>>();
 
-            services.AddTransient<IUsersService<UsersResponse, UsersRequest>, UsersService>();
+            services.AddTransient<IBaseService<UsersResponse, UsersRequest>, UsersService>();
         }
     }
 }

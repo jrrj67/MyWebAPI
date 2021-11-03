@@ -14,20 +14,20 @@ namespace MyWebAPI.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ILogger<LoginController> _logger;
-        private readonly IUsersService<UsersResponse, UsersRequest> _usersService;
+        private readonly ILoginService<LoginResponse, LoginRequest> _loginService;
 
-        public LoginController(ILogger<LoginController> logger, IUsersService<UsersResponse, UsersRequest> usersService)
+        public LoginController(ILogger<LoginController> logger, ILoginService<LoginResponse, LoginRequest> loginService)
         {
             _logger = logger;
-            _usersService = usersService;
+            _loginService = loginService;
         }
 
         [HttpPost]
-        public IActionResult Authenticate(UsersRequest userRequest)
+        public IActionResult Authenticate(LoginRequest loginRequest)
         {
             try
             {
-                var response = _usersService.Login(userRequest);
+                var response = _loginService.Login(loginRequest);
                 return Ok(response);
             }
             catch (ValidationException ex)

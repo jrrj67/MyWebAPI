@@ -6,7 +6,7 @@ namespace MyWebAPI.Data.Entities
 {
     public class RolesEntity : Role
     {
-        public ICollection<UsersEntity> Users { get; set; }
+        public virtual ICollection<UsersEntity> Users { get; set; }
         
         public static void OnModelCreating(ModelBuilder modelBuilder)
         {

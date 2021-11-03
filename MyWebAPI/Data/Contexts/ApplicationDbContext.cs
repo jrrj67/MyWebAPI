@@ -13,6 +13,7 @@ namespace MyWebAPI.Data.Contexts
         public DbSet<AnimesEntity> Animes { get; set; }
         public DbSet<EpisodesEntity> Episodes { get; set; }
         public DbSet<UsersEntity> Users { get; set; }
+        public DbSet<RolesEntity> Roles { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -22,6 +23,7 @@ namespace MyWebAPI.Data.Contexts
             UsersEntity.OnModelCreating(modelBuilder);
             AnimesEntity.OnModelCreating(modelBuilder);
             EpisodesEntity.OnModelCreating(modelBuilder);
+            RolesEntity.OnModelCreating(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
 

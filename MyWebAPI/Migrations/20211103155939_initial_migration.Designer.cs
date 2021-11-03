@@ -9,7 +9,7 @@ using MyWebAPI.Data.Contexts;
 namespace MyWebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211024174803_initial_migration")]
+    [Migration("20211103155939_initial_migration")]
     partial class initial_migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,6 +86,27 @@ namespace MyWebAPI.Migrations
                     b.ToTable("Episodes");
                 });
 
+            modelBuilder.Entity("MyWebAPI.Data.Entities.RolesEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("MyWebAPI.Data.Entities.UsersEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -107,10 +128,15 @@ namespace MyWebAPI.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
@@ -126,9 +152,25 @@ namespace MyWebAPI.Migrations
                     b.Navigation("Anime");
                 });
 
+            modelBuilder.Entity("MyWebAPI.Data.Entities.UsersEntity", b =>
+                {
+                    b.HasOne("MyWebAPI.Data.Entities.RolesEntity", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("MyWebAPI.Data.Entities.AnimesEntity", b =>
                 {
                     b.Navigation("Episodes");
+                });
+
+            modelBuilder.Entity("MyWebAPI.Data.Entities.RolesEntity", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }
