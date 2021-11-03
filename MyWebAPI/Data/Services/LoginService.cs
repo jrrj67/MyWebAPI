@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MyWebAPI.Data.Entities;
 using MyWebAPI.Data.Repositories;
 using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;

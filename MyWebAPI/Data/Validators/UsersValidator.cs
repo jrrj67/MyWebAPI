@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
 using MyWebAPI.Data.Requests;
-using MyWebAPI.Data.Responses;
-using MyWebAPI.Data.Services;
 
 namespace MyWebAPI.Data.Validators
 {

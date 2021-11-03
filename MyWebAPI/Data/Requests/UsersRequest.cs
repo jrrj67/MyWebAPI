@@ -1,7 +1,4 @@
 ﻿using FluentValidation;
-using MyWebAPI.Data.Entities;
-using MyWebAPI.Data.Repositories;
-using MyWebAPI.Data.Services;
 using MyWebAPI.Data.Validators;
 
 namespace MyWebAPI.Data.Requests
