@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using MyWebAPI.Data.Validators;
+﻿using System;
 
 namespace MyWebAPI.Data.Requests
 {
@@ -9,17 +8,5 @@ namespace MyWebAPI.Data.Requests
         public string Password { get; set; }
         public string Email { get; set; }
         public int RoleId { get; set; }
-
-        public UsersValidator validator = new UsersValidator();
-
-        public void Validate()
-        {
-            var validationResult = validator.Validate(this);
-
-            if (!validationResult.IsValid)
-            {
-                throw new ValidationException(validationResult.ToString(), validationResult.Errors);
-            }
-        }
     }
 }

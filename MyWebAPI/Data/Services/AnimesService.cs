@@ -33,7 +33,6 @@ namespace MyWebAPI.Data.Services
 
         public async Task<AnimesResponse> SaveAsync(AnimesRequest request)
         {
-            request.Validate();
             var requestModel = _mapper.Map<AnimesEntity>(request);
             await _repository.SaveAsync(requestModel);
             return _mapper.Map<AnimesResponse>(requestModel);
@@ -41,7 +40,6 @@ namespace MyWebAPI.Data.Services
 
         public async Task<AnimesResponse> UpdateAsync(int id, AnimesRequest request)
         {
-            request.Validate();
             var requestModel = _mapper.Map<AnimesEntity>(request);
             await _repository.UpdateAsync(id, requestModel);
             return _mapper.Map<AnimesResponse>(requestModel);

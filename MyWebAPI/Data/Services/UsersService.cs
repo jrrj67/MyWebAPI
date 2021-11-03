@@ -33,7 +33,6 @@ namespace MyWebAPI.Data.Services
 
         public async Task<UsersResponse> SaveAsync(UsersRequest request)
         {
-            request.Validate();
             var requestModel = _mapper.Map<UsersEntity>(request);
             requestModel.Password = BCrypt.Net.BCrypt.HashPassword(requestModel.Password);
             await _repository.SaveAsync(requestModel);
@@ -42,7 +41,6 @@ namespace MyWebAPI.Data.Services
 
         public async Task<UsersResponse> UpdateAsync(int id, UsersRequest request)
         {
-            request.Validate();
             var requestModel = _mapper.Map<UsersEntity>(request);
             requestModel.Password = BCrypt.Net.BCrypt.HashPassword(requestModel.Password);
             await _repository.UpdateAsync(id, requestModel);
