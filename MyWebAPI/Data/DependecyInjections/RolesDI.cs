@@ -9,15 +9,15 @@ using MyWebAPI.Data.Validators;
 
 namespace MyWebAPI.Data.DependecyInjections
 {
-    public abstract class UsersDI
+    public abstract class RolesDI
     {
         public static void RegisterDependencies(IServiceCollection services)
         {
-            services.AddTransient<IValidator<UsersRequest>, UsersValidator>();
+            services.AddTransient<IValidator<RolesRequest>, RolesValidator>();
 
-            services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<IBaseRepository<RolesEntity>, BaseRepository<RolesEntity>>();
 
-            services.AddTransient<IUsersService<UsersResponse, UsersRequest>, UsersService>();
+            services.AddTransient<IBaseService<RolesResponse, RolesRequest>, RolesService>();
         }
     }
 }

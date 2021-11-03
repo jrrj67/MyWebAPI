@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace MyWebAPI.Data.Services
+﻿namespace MyWebAPI.Data.Services
 {
     public interface ILoginService<LoginResponse, LoginRequest>
     {
-       LoginResponse Login(LoginRequest userRequest);
+        LoginResponse Login(LoginRequest userRequest);
     }
 }

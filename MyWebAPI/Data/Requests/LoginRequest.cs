@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MyWebAPI.Data.Requests
+﻿namespace MyWebAPI.Data.Requests
 {
     public class LoginRequest
     {

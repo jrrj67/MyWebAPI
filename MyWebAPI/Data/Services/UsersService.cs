@@ -3,19 +3,17 @@ using MyWebAPI.Data.Entities;
 using MyWebAPI.Data.Repositories;
 using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyWebAPI.Data.Services
 {
-    public class UsersService : IBaseService<UsersResponse, UsersRequest>
+    public class UsersService : IUsersService<UsersResponse, UsersRequest>
     {
-        private readonly IBaseRepository<UsersEntity> _repository;
+        private readonly IUsersRepository _repository;
         private readonly IMapper _mapper;
 
-        public UsersService(IBaseRepository<UsersEntity> repository, IMapper mapper)
+        public UsersService(IUsersRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
@@ -54,6 +52,11 @@ namespace MyWebAPI.Data.Services
         public async Task DeleteAsync(int id)
         {
             await _repository.DeleteAsync(id);
+        }
+
+        public bool IsUniqueEmail(string email)
+        {
+            return _repository.IsUniqueEmail(email);
         }
     }
 }

@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 namespace MyWebAPI.Controllers
 {
     [ApiController]
-    [Route("api/users")]
-    public class UsersController : ControllerBase
+    [Route("api/roles")]
+    public class RolesController : ControllerBase
     {
-        private readonly ILogger<UsersController> _logger;
-        private readonly IUsersService<UsersResponse, UsersRequest> _usersService;
+        private readonly ILogger<RolesController> _logger;
+        private readonly IBaseService<RolesResponse, RolesRequest> _rolesService;
 
-        public UsersController(ILogger<UsersController> logger, IUsersService<UsersResponse, UsersRequest> usersService)
+        public RolesController(ILogger<RolesController> logger, IBaseService<RolesResponse, RolesRequest> rolesService)
         {
             _logger = logger;
-            _usersService = usersService;
+            _rolesService = rolesService;
         }
 
         [HttpGet]
@@ -27,7 +27,7 @@ namespace MyWebAPI.Controllers
         {
             try
             {
-                return Ok(_usersService.GetAll());
+                return Ok(_rolesService.GetAll());
             }
             catch (Exception ex)
             {
@@ -40,7 +40,7 @@ namespace MyWebAPI.Controllers
         {
             try
             {
-                return Ok(_usersService.GetById(id));
+                return Ok(_rolesService.GetById(id));
             }
             catch (ArgumentException ex)
             {
@@ -53,11 +53,11 @@ namespace MyWebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveAsync(UsersRequest request)
+        public async Task<IActionResult> SaveAsync(RolesRequest request)
         {
             try
             {
-                return Ok(await _usersService.SaveAsync(request));
+                return Ok(await _rolesService.SaveAsync(request));
             }
             catch (ValidationException ex)
             {
@@ -70,11 +70,11 @@ namespace MyWebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, UsersRequest request)
+        public async Task<IActionResult> UpdateAsync(int id, RolesRequest request)
         {
             try
             {
-                return Ok(await _usersService.UpdateAsync(id, request));
+                return Ok(await _rolesService.UpdateAsync(id, request));
             }
             catch (ValidationException ex)
             {
@@ -95,7 +95,7 @@ namespace MyWebAPI.Controllers
         {
             try
             {
-                await _usersService.DeleteAsync(id);
+                await _rolesService.DeleteAsync(id);
                 return Ok();
             }
             catch (ArgumentException ex)

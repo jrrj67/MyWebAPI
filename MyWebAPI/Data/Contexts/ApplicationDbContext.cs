@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using MyWebAPI.Data.Entities;
 using MyWebAPI.Data.Models;
 using System;
@@ -10,14 +11,26 @@ namespace MyWebAPI.Data.Contexts
 {
     public class ApplicationDbContext : DbContext
     {
+        public IConfiguration Configuration { get; }
         public DbSet<AnimesEntity> Animes { get; set; }
         public DbSet<EpisodesEntity> Episodes { get; set; }
         public DbSet<UsersEntity> Users { get; set; }
         public DbSet<RolesEntity> Roles { get; set; }
 
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions options, IConfiguration configuration) : base(options)
         {
+            Configuration = configuration;
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .UseLazyLoadingProxies()
+                .UseMySQL(Configuration.GetConnectionString("Default"));
+
+            base.OnConfiguring(optionsBuilder);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             UsersEntity.OnModelCreating(modelBuilder);

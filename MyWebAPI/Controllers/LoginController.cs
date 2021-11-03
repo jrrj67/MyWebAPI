@@ -5,7 +5,6 @@ using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;
 using MyWebAPI.Data.Services;
 using System;
-using System.Threading.Tasks;
 
 namespace MyWebAPI.Controllers
 {

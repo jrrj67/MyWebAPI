@@ -4,19 +4,17 @@ using MyWebAPI.Data.Repositories;
 using MyWebAPI.Data.Requests;
 using MyWebAPI.Data.Responses;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyWebAPI.Data.Services
 {
     public class LoginService : ILoginService<LoginResponse, LoginRequest>
     {
-        private readonly IBaseRepository<UsersEntity> _repository;
+        private readonly IUsersRepository _repository;
         private readonly IMapper _mapper;
         private readonly ITokenService _tokenService;
 
-        public LoginService(IBaseRepository<UsersEntity> repository, IMapper mapper, ITokenService tokenService)
+        public LoginService(IUsersRepository repository, IMapper mapper, ITokenService tokenService)
         {
             _repository = repository;
             _mapper = mapper;

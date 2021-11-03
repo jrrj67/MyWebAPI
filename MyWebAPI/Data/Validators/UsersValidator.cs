@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using MyWebAPI.Data.Requests;
+using MyWebAPI.Data.Responses;
+using MyWebAPI.Data.Services;
 
 namespace MyWebAPI.Data.Validators
 {
@@ -21,6 +23,9 @@ namespace MyWebAPI.Data.Validators
                 .EmailAddress()
                 .NotNull()
                 .MaximumLength(100);
+
+            RuleFor(field => field.RoleId)
+                .NotNull();
         }
     }
 }

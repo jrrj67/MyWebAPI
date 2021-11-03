@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MyWebAPI.Data.Responses
+﻿namespace MyWebAPI.Data.Responses
 {
     public class LoginResponse
     {
